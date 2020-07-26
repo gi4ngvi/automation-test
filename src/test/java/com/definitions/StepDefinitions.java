@@ -24,8 +24,8 @@ public class StepDefinitions {
     }
 
     @When("I search with keyword {string}")
-    public void i_search_with_keyword(String string) {
-        searchResultPage = homePage.search(string);
+    public void i_search_with_keyword(String keyword) {
+        searchResultPage = homePage.search(keyword);
     }
 
     @When("I get first Youtube link result")
@@ -44,19 +44,19 @@ public class StepDefinitions {
     }
 
     @When("I pause the video after {int} seconds")
-    public void i_pause_the_video_after_seconds(Integer int1) {
-        youtubeVideoPage.waitForVideoPlaying(int1);
+    public void i_pause_the_video_after_seconds(Integer second) {
+        youtubeVideoPage.waitForVideoPlaying(second);
         youtubeVideoPage.pauseVideo();
     }
 
     @Then("I should see all results are contains {string}")
-    public void i_should_see_all_results_are_contains(String string) {
-        Assert.assertTrue(searchResultPage.verifyResultContains(string));
+    public void i_should_see_all_results_are_contains(String expectedResult) {
+        Assert.assertTrue(searchResultPage.verifyResultContains(expectedResult));
     }
 
     @Then("my inputted string {string} still remained on the search box")
-    public void my_inputted_string_still_remained_on_the_search_box(String string) {
-        Assert.assertEquals(string, searchResultPage.getInputtedText());
+    public void my_inputted_string_still_remained_on_the_search_box(String expectedResult) {
+        Assert.assertEquals(expectedResult, searchResultPage.getInputtedText());
     }
 
     @Then("the video title should be same with result on Google page")
