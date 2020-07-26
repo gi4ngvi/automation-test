@@ -18,8 +18,8 @@ public class StepDefinitions {
     private String resultTitle;
 
     @Given("I go to Google site {string}")
-    public void i_go_to_Google_site(String string) {
-        driver.get(string);
+    public void i_go_to_Google_site(String url) {
+        driver.get(url);
         homePage = new GoogleHomePage(driver);
     }
 
