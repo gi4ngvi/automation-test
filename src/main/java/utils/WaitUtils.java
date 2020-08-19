@@ -25,7 +25,7 @@ public class WaitUtils {
      */
 
     public void waitForPageLoad() throws JavascriptException {
-        int delay = 1;
+        int delay = 500;
         sleep(delay);
         for (int i = 0; i < TIMEOUT; i++) {
             //To check page ready state.
@@ -58,7 +58,7 @@ public class WaitUtils {
 
     public void sleep(long time) {
         try {
-            Thread.sleep(time * 1000);
+            Thread.sleep(time);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

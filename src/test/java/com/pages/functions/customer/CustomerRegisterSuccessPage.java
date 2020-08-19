@@ -1,6 +1,6 @@
-package com.pages.functions;
+package com.pages.functions.customer;
 
-import com.pages.locators.CustomerRegisterSuccessLocator;
+import com.pages.locators.customer.CustomerRegisterSuccessLocator;
 import org.openqa.selenium.WebDriver;
 
 public class CustomerRegisterSuccessPage extends CustomerRegisterSuccessLocator {

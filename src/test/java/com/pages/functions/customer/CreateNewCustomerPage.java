@@ -1,6 +1,6 @@
-package com.pages.functions;
+package com.pages.functions.customer;
 
-import com.pages.locators.CreateNewCustomerLocator;
+import com.pages.locators.customer.CreateNewCustomerLocator;
 import entity.Customer;
 import org.openqa.selenium.WebDriver;
 
