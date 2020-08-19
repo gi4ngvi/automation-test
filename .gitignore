@@ -8,4 +8,7 @@ dist/
 # JetBrains IDE
 .idea/
 
+# Report
+report/
+
 /*.iml
