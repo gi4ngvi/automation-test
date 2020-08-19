@@ -11,6 +11,7 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import utils.DataTest;
 import utils.SeleniumUtils;
+import utils.StringUtils;
 
 public class StepDefinitions {
     private static final String HOME_URL = "http://demo.guru99.com/v4";
@@ -19,7 +20,6 @@ public class StepDefinitions {
     private CreateNewCustomerPage createNewCustomerPage;
     private CustomerRegisterSuccessPage customerRegisterSuccessPage;
     private Customer testCustomer;
-    private String customerID;
 
     @Given("I go to homepage")
     public void i_go_to_homepage() {
@@ -53,9 +53,20 @@ public class StepDefinitions {
         Assert.assertEquals(successMsg, customerRegisterSuccessPage.getSuccessMessage());
     }
 
-
     @Then("customer information should be correct")
     public void customer_information_should_be_correct() {
-        // Write code here that turns the phrase above into concrete actions
+        String birthday = StringUtils.changeDateFormat(testCustomer.getDateOfBirth(), "dd/MM/yyyy", "yyyy-MM-dd");
+        Assert.assertNotNull(customerRegisterSuccessPage.getCustomerID());
+        Assert.assertEquals(testCustomer.getName(), customerRegisterSuccessPage.getCustomerName());
+        Assert.assertEquals(testCustomer.getGender(), customerRegisterSuccessPage.getCustomerGender());
+        Assert.assertEquals(birthday, customerRegisterSuccessPage.getCustomerBirthDate());
+        Assert.assertEquals(testCustomer.getAddress(), customerRegisterSuccessPage.getCustomerAddress());
+        Assert.assertEquals(testCustomer.getCity(), customerRegisterSuccessPage.getCustomerCity());
+        Assert.assertEquals(testCustomer.getState(), customerRegisterSuccessPage.getCustomerState());
+        Assert.assertEquals(testCustomer.getPin(), customerRegisterSuccessPage.getCustomerPin());
+        Assert.assertEquals(testCustomer.getMobile(), customerRegisterSuccessPage.getCustomerMobile());
+        Assert.assertEquals(testCustomer.getEmail(), customerRegisterSuccessPage.getCustomerEmail());
+        testCustomer.setId(customerRegisterSuccessPage.getCustomerID());
+        DataTest.storeCustomerInfo(testCustomer);
     }
 }

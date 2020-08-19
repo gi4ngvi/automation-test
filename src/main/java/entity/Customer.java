@@ -1,6 +1,7 @@
 package entity;
 
 public class Customer {
+    private String id;
     private String name;
     private String gender;
     private String dateOfBirth;
@@ -13,6 +14,7 @@ public class Customer {
     private String password;
 
     public Customer(Builder builder) {
+        this.id = builder.id;
         this.name = builder.name;
         this.gender = builder.gender;
         this.dateOfBirth = builder.dateOfBirth;
@@ -23,6 +25,14 @@ public class Customer {
         this.mobile = builder.mobile;
         this.email = builder.email;
         this.password = builder.password;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -106,6 +116,7 @@ public class Customer {
     }
 
     public static class Builder {
+        private String id;
         private String name;
         private String gender;
         private String dateOfBirth;
@@ -116,6 +127,11 @@ public class Customer {
         private String mobile;
         private String email;
         private String password;
+
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
 
         public Builder name(String name) {
             this.name = name;
