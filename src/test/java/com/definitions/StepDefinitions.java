@@ -1,76 +1,61 @@
 package com.definitions;
 
-import com.pages.functions.google.GoogleHomePage;
-import com.pages.functions.google.GoogleSearchResultPage;
-import com.pages.functions.youtube.YoutubeVideoPage;
+import com.pages.functions.CreateNewCustomerPage;
+import com.pages.functions.CustomerRegisterSuccessPage;
+import com.pages.functions.HomePage;
+import com.pages.functions.MainMenu;
+import entity.Customer;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.WebDriver;
+import utils.DataTest;
 import utils.SeleniumUtils;
 
 public class StepDefinitions {
-    private WebDriver driver = SeleniumUtils.getWebDriver();
-    private GoogleHomePage homePage;
-    private GoogleSearchResultPage searchResultPage;
-    private YoutubeVideoPage youtubeVideoPage;
-    private String resultTitle;
+    private static final String HOME_URL = "http://demo.guru99.com/v4";
+    private HomePage homePage;
+    private MainMenu mainMenu;
+    private CreateNewCustomerPage createNewCustomerPage;
+    private CustomerRegisterSuccessPage customerRegisterSuccessPage;
+    private Customer testCustomer;
+    private String customerID;
 
-    @Given("I go to Google site {string}")
-    public void i_go_to_Google_site(String url) {
-        driver.get(url);
-        homePage = new GoogleHomePage(driver);
+    @Given("I go to homepage")
+    public void i_go_to_homepage() {
+        SeleniumUtils.getWebDriver().get(HOME_URL);
+        homePage = new HomePage(SeleniumUtils.getWebDriver());
     }
 
-    @When("I search with keyword {string}")
-    public void i_search_with_keyword(String keyword) {
-        searchResultPage = homePage.search(keyword);
+    @Given("I login with username {string} and password {string}")
+    public void i_login_with_username_and_password(String id, String password) {
+        mainMenu = homePage.login(id, password);
     }
 
-    @When("I get first Youtube link result")
-    public void i_get_first_Youtube_link_result() {
-        resultTitle = searchResultPage.getFirstYoutubeResultTitle();
+    @When("I click New Customer")
+    public void i_click_New_Customer() {
+        createNewCustomerPage = mainMenu.goToCreateNewCustomer();
     }
 
-    @When("I click first Youtube link")
-    public void i_click_first_Youtube_link() {
-        youtubeVideoPage = searchResultPage.clickFirstYoutubeResult();
+    @When("I input new customer information")
+    public void i_input_new_customer_information() {
+        testCustomer = DataTest.createRandomCustomer();
+        createNewCustomerPage.inputCustomerInformation(testCustomer);
     }
 
-    @When("I play the video")
-    public void i_play_the_video() {
-        youtubeVideoPage.playVideo();
+    @When("I click submit")
+    public void i_click_submit() {
+        customerRegisterSuccessPage = createNewCustomerPage.submit();
     }
 
-    @When("I pause the video after {int} seconds")
-    public void i_pause_the_video_after_seconds(Integer second) {
-        youtubeVideoPage.waitForVideoPlaying(second);
-        youtubeVideoPage.pauseVideo();
+    @Then("I should see success message {string}")
+    public void i_should_see_success_message(String successMsg) {
+        Assert.assertEquals(successMsg, customerRegisterSuccessPage.getSuccessMessage());
     }
 
-    @Then("I should see all results are contains {string}")
-    public void i_should_see_all_results_are_contains(String expectedResult) {
-        Assert.assertTrue(searchResultPage.verifyResultContains(expectedResult));
-    }
 
-    @Then("my inputted string {string} still remained on the search box")
-    public void my_inputted_string_still_remained_on_the_search_box(String expectedResult) {
-        Assert.assertEquals(expectedResult, searchResultPage.getInputtedText());
-    }
-
-    @Then("the video title should be same with result on Google page")
-    public void the_video_title_should_be_same_with_result_on_Google_page() {
-        Assert.assertTrue(youtubeVideoPage.getTitle().contains(resultTitle));
-    }
-
-    @Then("the video should be played")
-    public void the_video_should_be_played() {
-        Assert.assertTrue(youtubeVideoPage.isVideoPlaying());
-    }
-
-    @Then("the video should be paused")
-    public void the_video_should_be_paused() {
-        Assert.assertFalse(youtubeVideoPage.isVideoPlaying());
+    @Then("customer information should be correct")
+    public void customer_information_should_be_correct() {
+        // Write code here that turns the phrase above into concrete actions
     }
 }
