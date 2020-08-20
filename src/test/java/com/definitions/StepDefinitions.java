@@ -8,7 +8,6 @@ import com.pages.functions.customer.CustomerRegisterSuccessPage;
 import com.pages.functions.deposit.DepositPage;
 import entity.Account;
 import entity.Customer;
-import io.cucumber.java.bs.A;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
